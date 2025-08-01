@@ -74,6 +74,18 @@ headers_post = {
 }
 
 print("🔎 Appel 7pace OData…")
+
+print("\n📤 Requête POST envoyée à 7pace OData")
+print("➡️ URL :", url_odata)
+print("➡️ Headers :")
+for k, v in headers_post.items():
+    if "Authorization" in k:
+        print(f"   {k}: Bearer ********")
+    else:
+        print(f"   {k}: {v}")
+print("➡️ Payload (corps de la requête) :")
+print(payload)
+
 response = requests.post(url_odata, headers=headers_post, data=payload)
 
 if response.status_code != 200:
