@@ -1,19 +1,10 @@
 trigger:
   branches:
     include:
-      - main  # ou la branche que tu utilises
+      - main
 
 pool:
   vmImage: 'ubuntu-latest'
-
-variables:
-  AZDO_ORG: '$(AZDO_ORG)'
-  AZDO_PROJECT: '$(AZDO_PROJECT)'
-  QUERY_ID: '$(QUERY_ID)'
-  AZDO_PAT: '$(AZDO_PAT)'
-  SEVENPACE_PAT: '$(SEVENPACE_PAT)'
-  NOM_ACTIVITE_DEV: '$(NOM_ACTIVITE_DEV)'
-  NOM_ACTIVITE_TEST: '$(NOM_ACTIVITE_TEST)'
 
 steps:
   - task: UsePythonVersion@0
