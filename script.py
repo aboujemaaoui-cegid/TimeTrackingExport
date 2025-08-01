@@ -6,16 +6,14 @@ from collections import defaultdict
 from datetime import datetime
 import csv
 
-load_dotenv() 
-
 # === Variables d’environnement Azure DevOps ===
-AZDO_ORG = os.getenv("AZDO_ORG")
-AZDO_PROJECT = os.getenv("AZDO_PROJECT")
-QUERY_ID = os.getenv("QUERY_ID")
-AZDO_PAT = os.getenv("AZDO_PAT")
-SEVENPACE_PAT = os.getenv("SEVENPACE_PAT")
-NOM_ACTIVITE_DEV = os.getenv("NOM_ACTIVITE_DEV")
-NOM_ACTIVITE_TEST = os.getenv("NOM_ACTIVITE_TEST")
+AZDO_ORG = os.environ["AZDO_ORG"]
+AZDO_PROJECT = os.environ["AZDO_PROJECT"]
+QUERY_ID = os.environ["QUERY_ID"]
+AZDO_PAT = os.environ["AZDO_PAT"]
+SEVENPACE_PAT = os.environ["SEVENPACE_PAT"]
+NOM_ACTIVITE_DEV = os.environ["NOM_ACTIVITE_DEV"]
+NOM_ACTIVITE_TEST = os.environ["NOM_ACTIVITE_TEST"]
 
 # === Headers ===
 basic_token = base64.b64encode(f":{AZDO_PAT}".encode()).decode()
@@ -88,6 +86,7 @@ try:
     r = response.json()
 except Exception as e:
     print("❌ Erreur JSON :", e)
+    print("➡️ Réponse brute :", response.text)  # Ajoute cette ligne
     exit(1)
 
 worklogs = r.get("value", [])
