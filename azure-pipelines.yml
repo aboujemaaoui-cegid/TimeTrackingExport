@@ -27,3 +27,10 @@ steps:
       SEVENPACE_PAT: $(SEVENPACE_PAT)
       NOM_ACTIVITE_DEV: $(NOM_ACTIVITE_DEV)
       NOM_ACTIVITE_TEST: $(NOM_ACTIVITE_TEST)
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(System.DefaultWorkingDirectory)'
+      ArtifactName: 'export'
+      publishLocation: 'Container'
+    displayName: '📦 Publier le fichier export CSV'
