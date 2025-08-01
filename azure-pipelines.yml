@@ -1,0 +1,40 @@
+trigger:
+  branches:
+    include:
+      - main  # ou la branche que tu utilises
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  AZDO_ORG: '$(AZDO_ORG)'
+  AZDO_PROJECT: '$(AZDO_PROJECT)'
+  QUERY_ID: '$(QUERY_ID)'
+  AZDO_PAT: '$(AZDO_PAT)'
+  SEVENPACE_PAT: '$(SEVENPACE_PAT)'
+  NOM_ACTIVITE_DEV: '$(NOM_ACTIVITE_DEV)'
+  NOM_ACTIVITE_TEST: '$(NOM_ACTIVITE_TEST)'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+
+  - script: |
+      pip install python-dotenv requests
+    displayName: 'Install dependencies'
+
+  - script: |
+      echo "AZDO_ORG=${AZDO_ORG}" >> .env
+      echo "AZDO_PROJECT=${AZDO_PROJECT}" >> .env
+      echo "QUERY_ID=${QUERY_ID}" >> .env
+      echo "AZDO_PAT=${AZDO_PAT}" >> .env
+      echo "SEVENPACE_PAT=${SEVENPACE_PAT}" >> .env
+      echo "NOM_ACTIVITE_DEV=${NOM_ACTIVITE_DEV}" >> .env
+      echo "NOM_ACTIVITE_TEST=${NOM_ACTIVITE_TEST}" >> .env
+    displayName: 'Créer le fichier .env'
+
+  - script: |
+      python script.py
+    displayName: 'Exécuter le script'
