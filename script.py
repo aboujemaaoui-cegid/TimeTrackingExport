@@ -64,7 +64,7 @@ for ticket_id in ids:
 
 # === Étape 3 : Récupération des worklogs ===
 all_ids = ids + child_ids
-url_odata = "https://cegid.timehub.7pace.com/api/odata/v3.2/workLogsOnly/$query"
+url_odata = f"https://{AZDO_ORG}.timehub.7pace.com/api/odata/v3.2/workLogsOnly/$query"
 payload = f"$filter=WorkItemId in ({','.join(all_ids)})"
 
 headers_post = {
