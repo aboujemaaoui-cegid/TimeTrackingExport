@@ -30,7 +30,7 @@ steps:
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(System.DefaultWorkingDirectory)'
+      PathtoPublish: 'output'
       ArtifactName: 'export'
       publishLocation: 'Container'
-    displayName: '📦 Publier le fichier export CSV'
+    displayName: 'Publier le fichier export CSV'

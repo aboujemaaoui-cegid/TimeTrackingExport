@@ -147,7 +147,8 @@ for t in tickets:
     })
     rows.append(t)
 
-filename = f"export_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv"
+os.makedirs("output", exist_ok=True)
+filename = f"output/export_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv"
 with open(filename, "w", newline='', encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=rows[0].keys(), delimiter=";")
     writer.writeheader()
