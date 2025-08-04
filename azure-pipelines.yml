@@ -1,36 +1,57 @@
-trigger:
-  branches:
-    include:
-      - main
+parameters:
+  - name: AZDO_ORG
+    displayName: 'Azure DevOps Organization'
+    type: string
+  - name: AZDO_PROJECT
+    displayName: 'Project Name'
+    type: string
+  - name: QUERY_ID
+    displayName: 'WIQL Query ID'
+    type: string
+  - name: AZDO_PAT
+    displayName: 'Azure DevOps PAT'
+    type: string
+  - name: SEVENPACE_PAT
+    displayName: '7pace PAT'
+    type: string
+  - name: NOM_ACTIVITE_DEV
+    displayName: 'Nom activité DEV'
+    type: string
+    default: 'Développement'
+  - name: NOM_ACTIVITE_TEST
+    displayName: 'Nom activité TEST'
+    type: string
+    default: 'Test'
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+- job: RunExport
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
 
-steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-      addToPath: true
+    - script: |
+        pip install requests
+      displayName: 'Installer les dépendances'
 
-  - script: |
-      pip install requests
-    displayName: 'Installer les dépendances'
+    - script: |
+        python script.py
+      displayName: 'Exécuter le script'
+      env:
+        AZDO_ORG: ${{ parameters.AZDO_ORG }}
+        AZDO_PROJECT: ${{ parameters.AZDO_PROJECT }}
+        QUERY_ID: ${{ parameters.QUERY_ID }}
+        AZDO_PAT: ${{ parameters.AZDO_PAT }}
+        SEVENPACE_PAT: ${{ parameters.SEVENPACE_PAT }}
+        NOM_ACTIVITE_DEV: ${{ parameters.NOM_ACTIVITE_DEV }}
+        NOM_ACTIVITE_TEST: ${{ parameters.NOM_ACTIVITE_TEST }}
 
-  - script: |
-      python script.py
-    displayName: 'Exécuter le script'
-    env:
-      AZDO_ORG: $(AZDO_ORG)
-      AZDO_PROJECT: $(AZDO_PROJECT)
-      QUERY_ID: $(QUERY_ID)
-      AZDO_PAT: $(AZDO_PAT)
-      SEVENPACE_PAT: $(SEVENPACE_PAT)
-      NOM_ACTIVITE_DEV: $(NOM_ACTIVITE_DEV)
-      NOM_ACTIVITE_TEST: $(NOM_ACTIVITE_TEST)
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: 'output'
-      ArtifactName: 'export'
-      publishLocation: 'Container'
-    displayName: 'Publier le fichier export CSV'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'output'
+        ArtifactName: 'export'
+        publishLocation: 'Container'
+      displayName: 'Publier le fichier export CSV'
