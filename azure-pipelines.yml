@@ -2,9 +2,11 @@ parameters:
   - name: AZDO_ORG
     displayName: 'Azure DevOps Organization'
     type: string
+    default: 'cegid'
   - name: AZDO_PROJECT
     displayName: 'Project Name'
     type: string
+    default: 'RHPi'
   - name: QUERY_ID
     displayName: 'WIQL Query ID'
     type: string
@@ -17,11 +19,11 @@ parameters:
   - name: NOM_ACTIVITE_DEV
     displayName: 'Nom activité DEV'
     type: string
-    default: 'Développement'
+    default: '03. Development'
   - name: NOM_ACTIVITE_TEST
     displayName: 'Nom activité TEST'
     type: string
-    default: 'Test'
+    default: '=08. Testing : Manual Test'
 
 jobs:
 - job: RunExport
